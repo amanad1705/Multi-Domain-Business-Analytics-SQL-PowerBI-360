@@ -1,7 +1,8 @@
 USE BUSINESS_ANALYTICS_FINAL;
-GO
-CREATE VIEW Analytics.Q01_Monthly_Sales_Profit
-AS
+
+-- Q01 Monthly Sales Profit
+
+
 SELECT
     d.Year,
     d.Month,
@@ -21,12 +22,11 @@ GROUP BY
     d.Year,
     d.Month,
     d.MonthName;
-GO
+
 /* =========================================================
    Q02 - Top 10 Products by Revenue
    ========================================================= */
-CREATE OR ALTER VIEW Analytics.Q02_Top_Products
-AS
+
 SELECT TOP 10
     p.ProductID,
     p.ProductName,
@@ -49,14 +49,13 @@ GROUP BY
     p.Category,
     p.SubCategory
 ORDER BY Revenue DESC;
-GO
+
 
 
 /* =========================================================
    Q03 - Customer Segmentation / RFM
    ========================================================= */
-CREATE OR ALTER VIEW Analytics.Q03_Customer_Segmentation
-AS
+
 WITH CustomerRFM AS
 (
     SELECT
@@ -116,14 +115,12 @@ SELECT
         ELSE 'Regular'
     END AS CustomerSegment
 FROM Scored;
-GO
+
 
 
 /* =========================================================
    Q04 - Regional Performance
    ========================================================= */
-CREATE OR ALTER VIEW Analytics.Q04_Regional_Performance
-AS
 SELECT
     c.Region,
     COUNT(DISTINCT f.CustomerID) AS ActiveCustomers,
@@ -140,14 +137,13 @@ FROM dbo.FactSales f
 JOIN dbo.DimCustomer c
     ON f.CustomerID = c.CustomerID
 GROUP BY c.Region;
-GO
+
 
 
 /* =========================================================
    Q05 - Loan Approval Analysis
    ========================================================= */
-CREATE OR ALTER VIEW Analytics.Q05_Loan_Approval
-AS
+
 SELECT
     LoanType,
     COUNT(*) AS TotalApplications,
@@ -171,8 +167,6 @@ SELECT
     ) AS AvgApprovedLoanAmount
 FROM dbo.FactLoans
 GROUP BY LoanType;
-GO
-
 
 /* =========================================================
    Q06 - Loan Default / Risk Analysis
